@@ -156,7 +156,6 @@ int main() {
     char nomes[MAX][NAME_LENGTH];
     float notas[MAX];
 
-    // Exemplo de como preencher os vetores
     for (int i = 0; i < MAX; i++) {
         printf("Digite o nome do aluno %d: ", i + 1);
         scanf("%s", nomes[i]);
@@ -165,7 +164,6 @@ int main() {
         scanf("%f", &notas[i]);
     }
 
-    // Exemplo de como acessar e imprimir os valores armazenados nos vetores
     for (int i = 0; i < MAX; i++) {
         printf("Aluno %d: Nome: %s, Nota: %.2f\n", i + 1, nomes[i], notas[i]);
     }
@@ -202,7 +200,6 @@ int main() {
 
 #define MAX_NOTAS 3
 
-// Definição da estrutura Aluno
 struct Aluno {
     int numero;
     float notas[MAX_NOTAS];
@@ -236,7 +233,6 @@ float media;
 
 #define NUM_ALUNOS 10
 
-// Definição da estrutura Aluno
 struct Aluno {
     int num_aluno;
     float nota1, nota2, nota3;
