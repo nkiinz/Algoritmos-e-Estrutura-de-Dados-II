@@ -1,32 +1,56 @@
 //1
 
 #include <stdio.h>
-#include <math.h>
+
+int triangulo(int a, int b, int c) {
+    if (a + b > c && a + c > b && b + c > a) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+int equilatero(int a, int b, int c) {
+    if (a == b && b == c) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+int isosceles(int a, int b, int c) {
+    if(a == b || b == c || a == c) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+int escaleno(int a, int b, int c) {
+    if (a != b && b != c && a != c) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
 
 int main() {
-    float numeros[10], quadrados[10];
-    
-    printf("Digite 10 números reais:\n");
-    for(int i = 0; i < 10; i++) {
-        scanf("%f", &numeros[i]);
+    int a, b, c;
+
+    printf("Coloque três lados de um triângulo: ");
+    scanf("%d %d %d", &a, &b, &c);
+
+    if (triangulo(a, b, c)) {
+        if (equilatero(a, b, c)) {
+            printf("O triângulo é equilátero.\n");
+        } else if (isosceles(a, b, c)) {
+            printf("O triângulo é isósceles.\n");
+        } else if (escaleno(a, b, c)) {
+            printf("O triângulo é escaleno.\n");
+        }
+    } else {
+        printf("Os três lados não formam um triângulo.\n");
     }
-    
-    for(int i = 0; i < 10; i++) {
-        quadrados[i] = pow(numeros[i], 2);
-    }
-    
-    printf("\nVetor de números reais:\n");
-    for(int i = 0; i < 10; i++) {
-        printf("%.2f ", numeros[i]);
-    }
-    
-    printf("\n\nVetor dos quadrados dos números:\n");
-    for(int i = 0; i < 10; i++) {
-        printf("%.2f ", quadrados[i]);
-    }
-    
-    printf("\n");
-    
     return 0;
 }
 
@@ -34,156 +58,184 @@ int main() {
 
 #include <stdio.h>
 
-int main() {
-    int vetor[8];
-    int x, y;
-    
-    printf("Digite 8 números inteiros para preencher o vetor:\n");
-    for(int i = 0; i < 8; i++) {
-        scanf("%d", &vetor[i]);
+int mdc(int a, int b) {
+    int resto;
+    while (b != 0) {
+        resto = a % b;
+        a = b;
+        b = resto;
     }
-    
-    printf("Digite dois valores X e Y correspondentes a duas posições no vetor (de 0 a 7):\n");
-    scanf("%d %d", &x, &y);
-    
-    if(x >= 0 && x < 8 && y >= 0 && y < 8) {
-        int soma = vetor[x] + vetor[y];
-        printf("A soma dos valores nas posições %d e %d é: %d\n", x, y, soma);
-    } else {
-        printf("Posições inválidas!\n");
-    }
-    
-    return 0;
+    return a;
 }
 
+int mmc(int a, int b) {
+    return (a * b) / mdc(a, b);
+}
+
+int main() {
+    int num1, num2;
+
+    printf("Digite o primeiro número: ");
+    scanf("%d", &num1);
+    printf("Digite o segundo número: ");
+    scanf("%d", &num2);
+
+    printf("O MMC de %d e %d é: %d\n", num1, num2, mmc(num1, num2));
+
+    return 0;
+}
 
 //3
 
 #include <stdio.h>
 
+int primo(int num);
+int somaPrimos(int n);
+
 int main() {
-    int vetor[10];
-    int pares = 0;
+    int n;
     
-    printf("Digite 10 números inteiros para preencher o vetor:\n");
-    for(int i = 0; i < 10; i++) {
-        scanf("%d", &vetor[i]);
-    }
-    
-    for(int i = 0; i < 10; i++) {
-        if(vetor[i] % 2 == 0) {
-            pares++;
-        }
-    }
-    
-    printf("O vetor possui %d valores pares.\n", pares);
-    
+    printf("Digite a quantidade de números primos que deseja somar: ");
+    scanf("%d", &n);
+   
+    printf("A soma dos primeiros %d números primos é: %d\n", n, somaPrimos(n));
+
     return 0;
+}
+
+int primo(int num) {
+    if (num <= 1) return 0; 
+    if (num <= 3) return 1; 
+    
+    for (int i = 2; i * i <= num; i++) {
+        if (num % i == 0) return 0; 
+    }
+
+    return 1; 
+}
+
+int somaPrimos(int n) {
+    int soma = 0;
+    int num = 2; 
+
+    while (n > 0) {
+        if (primo(num)) {
+            soma += num;
+            n--;
+        }
+        num++;
+    }
+
+    return soma;
 }
 
 //4
 
 #include <stdio.h>
 
+float mediaTurma(int numAlunos);
+float mediaEscola(int numTurmas);
+
 int main() {
-    int vetor[10];
-    int maior, posicao;
+    int numTurmas;
 
-    
-    printf("Digite 10 números inteiros:\n");
-    for(int i = 0; i < 10; i++) {
-        scanf("%d", &vetor[i]);
-    }
+    printf("Digite o número de turmas na escola: ");
+    scanf("%d", &numTurmas);
 
-       maior = vetor[0];
-    posicao = 0;
 
-    
-    for(int i = 1; i < 10; i++) {
-        if(vetor[i] > maior) {
-            maior = vetor[i];
-            posicao = i;
-        }
-    }
-
-       printf("Vetor digitado:\n");
-    for(int i = 0; i < 10; i++) {
-        printf("%d ", vetor[i]);
-    }
-    printf("\n");
-
-   
-    printf("O maior elemento é: %d\n", maior);
-    printf("Ele está na posição: %d\n", posicao);
+    printf("A média geral da escola é: %.2f\n", mediaEscola(numTurmas));
 
     return 0;
+}
+
+float mediaTurma(int numAlunos) {
+    float soma = 0;
+    float nota;
+
+    printf("Digite as notas dos %d alunos:\n", numAlunos);
+
+    for (int i = 0; i < numAlunos; i++) {
+        printf("Nota do aluno %d: ", i + 1);
+        scanf("%f", &nota);
+        soma += nota;
+    }
+
+    return soma / numAlunos;
+}
+
+float mediaEscola(int numTurmas) {
+    float soma = 0;
+
+    for (int i = 0; i < numTurmas; i++) {
+        int numAlunos;
+        printf("\nTurma %d:\n", i + 1);
+        printf("Digite o número de alunos na turma: ");
+        scanf("%d", &numAlunos);
+        soma += mediaTurma(numAlunos);
+    }
+
+    return soma / numTurmas;
 }
 
 //5
 
 #include <stdio.h>
 
+// Protótipo da função
+int fibonacci(int n);
+
 int main() {
-    int valores[6];
+    int n;
+    
+    printf("Digite o valor de n para calcular o n-ésimo termo da série de Fibonacci: ");
+    scanf("%d", &n);
 
-    printf("Digite 6 números inteiros:\n");
-    for(int i = 0; i < 6; i++) {
-        scanf("%d", &valores[i]);
-    }
-
-    printf("Valores na ordem inversa:\n");
-    for(int i = 5; i >= 0; i--) {
-        printf("%d ", valores[i]);
-    }
-    printf("\n");
+    printf("O %d-ésimo termo da série de Fibonacci é: %d\n", n, fibonacci(n));
 
     return 0;
 }
 
+int fibonacci(int n) {
+    if (n <= 1) // Casos base: F(0) = 0 e F(1) = 1
+        return n;
+
+    int termo_atual = 1;
+    int termo_anterior = 0;
+
+    for (int i = 2; i <= n; i++) {
+        int proximo_termo = termo_atual + termo_anterior;
+        termo_anterior = termo_atual;
+        termo_atual = proximo_termo;
+    }
+
+    return termo_atual;
+}
 
 //6
 
 #include <stdio.h>
 
-int main() {
-    float notas[15];
-    float soma = 0, media;
 
-    printf("Digite as notas dos 15 alunos:\n");
-    for(int i = 0; i < 15; i++) {
-        scanf("%f", &notas[i]);
-        soma += notas[i];
-    }
-
-    media = soma / 15;
-
-    printf("A média geral das notas é: %.2f\n", media);
-
-    return 0;
+void rotacao(int *num1, int *num2, int *num3) {
+    int temp = *num1;
+    *num1 = *num2;
+    *num2 = *num3;
+    *num3 = temp;
 }
 
-
-//7
-
-#include <stdio.h>
-
 int main() {
-    float vetor[10];
-    int negativos = 0;
-    float soma_positivos = 0;
+    int num1, num2, num3;
 
-    printf("Digite 10 números reais:\n");
-    for(int i = 0; i < 10; i++) {
-        scanf("%f", &vetor[i]);
-        if(vetor[i] < 0) {
-            negativos++;
-        } else {
-            soma_positivos += vetor[i];
-        }
-    }
+    printf("Digite três números para a rotação: ");
+    scanf("%d %d %d", &num1, &num2, &num3);
 
-    printf("Quantidade de números negativos: %d\n", negativos);
-    printf("Soma dos números positivos: %.2f\n", soma_positivos);
+  
+    printf("Números antes da rotação: %d, %d, %d\n", num1, num2, num3);
+
+    rotacao(&num1, &num2, &num3);
+
+  
+    printf("Números depois da rotação: %d, %d, %d\n", num1, num2, num3);
 
     return 0;
 }
@@ -192,23 +244,69 @@ int main() {
 
 #include <stdio.h>
 
-int main() {
-    int vetor[10];
+#define SIZE 5
 
-    printf("Digite 10 números inteiros:\n");
-    for(int i = 0; i < 10; i++) {
-        scanf("%d", &vetor[i]);
-    }
-
-    printf("Valores iguais no vetor:\n");
-    for(int i = 0; i < 10; i++) {
-        for(int j = i + 1; j < 10; j++) {
-            if(vetor[i] == vetor[j]) {
-                printf("%d\n", vetor[i]);
-                break;
-            }
+void primeiroTriangulo(int matriz[SIZE][SIZE]) {
+    printf("Primeiro Triângulo:\n");
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j <= i; j++) {
+            printf("%d ", matriz[i][j]);
         }
+        printf("\n");
     }
+}
+
+void segundoTriangulo(int matriz[SIZE][SIZE]) {
+    printf("\nSegundo Triângulo:\n");
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = SIZE - 1; j >= i; j--) {
+            printf("%d ", matriz[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void terceiroTriangulo(int matriz[SIZE][SIZE]) {
+    printf("\nTerceiro Triângulo:\n");
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < i; j++) {
+            printf("  "); // Espaços para formatar o triângulo
+        }
+        for (int j = i; j < SIZE; j++) {
+            printf("%d ", matriz[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+
+void quartoTriangulo(int matriz[SIZE][SIZE]) {
+    printf("\nQuarto Triângulo:\n");
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE - i - 1; j++) {
+            printf("  "); // Espaços para formatar o triângulo
+        }
+        for (int j = SIZE - i - 1; j < SIZE; j++) {
+            printf("%d ", matriz[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int matriz[SIZE][SIZE] = {
+        {1, 2, 3, 4, 5},
+        {6, 7, 8, 9, 10},
+        {11, 12, 13, 14, 15},
+        {16, 17, 18, 19, 20},
+        {21, 22, 23, 24, 25}
+    };
+
+  
+    primeiroTriangulo(matriz);
+    segundoTriangulo(matriz);
+    terceiroTriangulo(matriz);
+    quartoTriangulo(matriz);
 
     return 0;
 }
@@ -217,31 +315,26 @@ int main() {
 
 #include <stdio.h>
 
+int menorEntreTres(int num1, int num2, int num3) {
+    int menor = num1;
+
+    if (num2 < menor)
+        menor = num2;
+    if (num3 < menor)
+        menor = num3;
+
+    return menor;
+}
+
 int main() {
-    int vetor[10];
+    int num1, num2, num3;
 
-    printf("Digite 10 números inteiros:\n");
-    for(int i = 0; i < 10; i++) {
-        scanf("%d", &vetor[i]);
-    }
+    printf("Digite três números separados por espaços: ");
+    scanf("%d %d %d", &num1, &num2, &num3);
 
-    printf("Vetor original:\n");
-    for(int i = 0; i < 10; i++) {
-        printf("%d ", vetor[i]);
-    }
-    printf("\n");
+    int menor = menorEntreTres(num1, num2, num3);
 
-        for(int i = 0; i < 10; i++) {
-        if(vetor[i] < 0) {
-            vetor[i] = 0;
-        }
-    }
-
-    printf("Vetor modificado:\n");
-    for(int i = 0; i < 10; i++) {
-        printf("%d ", vetor[i]);
-    }
-    printf("\n");
+    printf("O menor dos três números é: %d\n", menor);
 
     return 0;
 }
@@ -250,21 +343,27 @@ int main() {
 
 #include <stdio.h>
 
+int maiorEntreTres(int num1, int num2, int num3) {
+    int maior = num1;
+
+    if (num2 > maior)
+        maior = num2;
+    if (num3 > maior)
+        maior = num3;
+
+    return maior;
+}
+
 int main() {
-    int matriz[4][4];
-    int contador = 0;
+    int num1, num2, num3;
 
-    printf("Digite os elementos da matriz 4x4:\n");
-    for(int i = 0; i < 4; i++) {
-        for(int j = 0; j < 4; j++) {
-            scanf("%d", &matriz[i][j]);
-            if(matriz[i][j] > 10) {
-                contador++;
-            }
-        }
-    }
+  
+    printf("Digite três números separados por espaços: ");
+    scanf("%d %d %d", &num1, &num2, &num3);
 
-    printf("A matriz possui %d valores maiores que 10.\n", contador);
+    int maior = maiorEntreTres(num1, num2, num3);
+
+    printf("O maior dos três números é: %d\n", maior);
 
     return 0;
 }
@@ -273,26 +372,34 @@ int main() {
 
 #include <stdio.h>
 
+int maximo(int num1, int num2, int num3, int *menor) {
+    int maior = num1;
+
+    if (num2 > maior)
+        maior = num2;
+    if (num3 > maior)
+        maior = num3;
+
+   
+    *menor = num1;
+    if (num2 < *menor)
+        *menor = num2;
+    if (num3 < *menor)
+        *menor = num3;
+
+    return maior;
+}
+
 int main() {
-    int matriz[5][5];
+    int num1, num2, num3, menor;
 
-        for(int i = 0; i < 5; i++) {
-        for(int j = 0; j < 5; j++) {
-            matriz[i][j] = 0;
-        }
-    }
+    printf("Digite três números separados por espaços: ");
+    scanf("%d %d %d", &num1, &num2, &num3);
 
-        for(int i = 0; i < 5; i++) {
-        matriz[i][i] = 1;
-    }
+    int maior = maximo(num1, num2, num3, &menor);
 
-        printf("Matriz resultante:\n");
-    for(int i = 0; i < 5; i++) {
-        for(int j = 0; j < 5; j++) {
-            printf("%d ", matriz[i][j]);
-        }
-        printf("\n");
-    }
+    printf("O maior dos três números é: %d\n", maior);
+    printf("O menor dos três números é: %d\n", menor);
 
     return 0;
 }
@@ -301,30 +408,52 @@ int main() {
 
 #include <stdio.h>
 
+
+int soma(int num1, int num2);
+
 int main() {
-    int matriz[4][4];
-    int linha_maior = 0, coluna_maior = 0;
+    int num1, num2;
 
-    printf("Digite os elementos da matriz 4x4:\n");
-    for(int i = 0; i < 4; i++) {
-        for(int j = 0; j < 4; j++) {
-            scanf("%d", &matriz[i][j]);
-            if(matriz[i][j] > matriz[linha_maior][coluna_maior]) {
-                linha_maior = i;
-                coluna_maior = j;
-            }
-        }
-    }
+    printf("Digite um número inteiro: ");
+    scanf("%d", &num1);
+    printf("Digite o segundo número inteiro: ");
+    scanf("%d", &num2);
 
-    printf("Matriz 4x4:\n");
-    for(int i = 0; i < 4; i++) {
-        for(int j = 0; j < 4; j++) {
-            printf("%d\t", matriz[i][j]);
-        }
-        printf("\n");
-    }
+    int resultado = soma(num1, num2);
 
-    printf("O maior valor está na linha %d e coluna %d.\n", linha_maior, coluna_maior);
+    printf("A soma de %d e %d é: %d\n", num1, num2, resultado);
 
     return 0;
+}
+
+int soma(int num1, int num2) {
+    return num1 + num2;
+}
+
+//13
+
+#include <stdio.h>
+
+int maior(int num1, int num2);
+
+int main() {
+    int num1, num2;
+
+    printf("Digite o primeiro número inteiro: ");
+    scanf("%d", &num1);
+    printf("Digite o segundo número inteiro: ");
+    scanf("%d", &num2);
+
+    int maior_numero = maior(num1, num2);
+
+    printf("O maior número entre %d e %d é: %d\n", num1, num2, maior_numero);
+
+    return 0;
+}
+
+int maior(int num1, int num2) {
+    if (num1 > num2)
+        return num1;
+    else
+        return num2;
 }
